@@ -1,0 +1,25 @@
+##############################
+# Maven / Java build outputs
+##############################
+target/
+test-output/
+*.class
+hs_err_pid*
+replay_pid*
+
+##############################
+# Eclipse
+##############################
+.project
+.classpath
+.settings/
+.metadata/
+org.eclipse.*
+
+##############################
+# Archives / logs
+##############################
+*.log
+*.zip
+*.tar.gz
+*.tgz
