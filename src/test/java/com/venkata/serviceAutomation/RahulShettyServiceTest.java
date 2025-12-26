@@ -4,8 +4,6 @@ import org.testng.annotations.Test;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
-import serviceAutomation.RequestData;
-
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 import org.testng.annotations.BeforeMethod;

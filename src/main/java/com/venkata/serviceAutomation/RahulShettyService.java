@@ -1,10 +1,10 @@
 package com.venkata.serviceAutomation;
 
 import io.restassured.response.Response;
-
 import static io.restassured.RestAssured.*;
 import io.restassured.specification.RequestSpecification;
 import serviceAutomation.RequestData;
+
 
 public class RahulShettyService {
     
