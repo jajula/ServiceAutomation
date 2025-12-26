@@ -1,4 +1,4 @@
-package serviceAutomation;
+package com.venkata.serviceAutomation;
 
 public class RequestData {
 	
