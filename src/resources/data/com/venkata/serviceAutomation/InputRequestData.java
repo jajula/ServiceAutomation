@@ -1,6 +1,6 @@
 package com.venkata.serviceAutomation;
 
-public class RequestData {
+public class InputRequestData {
 	
 	public static String addPlace() {
 		

@@ -12,7 +12,7 @@ public class RahulShettyService {
     
     public Response addPlace() {
         return given()
-                .body(RequestData.addPlace())
+                .body(InputRequestData.addPlace())
                 .when()
                 .post("/maps/api/place/add/json");
     }
@@ -26,7 +26,7 @@ public class RahulShettyService {
     
     public Response deletePlace(String place) {
         return given()
-                .body(RequestData.deletePlace(place))
+                .body(InputRequestData.deletePlace(place))
                 .when()
                 .delete("/maps/api/place/delete/json");
     }
