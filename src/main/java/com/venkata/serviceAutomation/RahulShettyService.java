@@ -2,7 +2,6 @@ package com.venkata.serviceAutomation;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.*;
 
-import com.venkata.serviceAutomation.RequestData;
 
 
 public class RahulShettyService {
