@@ -3,7 +3,6 @@ import io.restassured.response.Response;
 import static io.restassured.RestAssured.*;
 
 
-
 public class RahulShettyService {
     
     public RahulShettyService() {
