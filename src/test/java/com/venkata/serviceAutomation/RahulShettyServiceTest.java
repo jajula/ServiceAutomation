@@ -85,15 +85,39 @@ public class RahulShettyServiceTest {
 		String placeId = addJs.get("place_id");
 		logger.info("Place created for retrieval - Place ID: " + placeId);
 		
+		// Add a small delay to ensure place is available (if needed)
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		
 		// Now retrieve the place
 		Response getResponse = service.getPlace(placeId);
 		
-		// Validate HTTP status code and response body
-		getResponse.then()
-			.assertThat()
-			.statusCode(200);
+		// Log the raw response for debugging
+		String responseBody = getResponse.asString();
+		logger.info("Get Place Response Status Code: " + getResponse.getStatusCode());
+		logger.info("Get Place Response Content-Type: " + getResponse.getContentType());
+		logger.info("Get Place Response Body: " + responseBody);
 		
-		JsonPath getJs = new JsonPath(getResponse.asString());
+		// Validate HTTP status code first
+		int statusCode = getResponse.getStatusCode();
+		assertThat("Status code should be 200", statusCode, equalTo(200));
+		
+		// Check if response is valid JSON before parsing
+		if (responseBody == null || responseBody.trim().isEmpty()) {
+			throw new AssertionError("Response body is empty");
+		}
+		
+		// Try to parse JSON - if it fails, log the actual response
+		JsonPath getJs;
+		try {
+			getJs = new JsonPath(responseBody);
+		} catch (Exception e) {
+			logger.error("Failed to parse JSON response. Response was: " + responseBody);
+			throw new AssertionError("Response is not valid JSON. Response: " + responseBody, e);
+		}
 		
 		// Validate the retrieved place details
 		assertThat("Place ID should match", getJs.get("place_id"), equalTo(placeId));
@@ -101,7 +125,7 @@ public class RahulShettyServiceTest {
 		assertThat("Name should exist", getJs.get("name"), notNullValue());
 		
 		logger.info("Place Retrieved Successfully - Place ID: " + placeId);
-		logger.debug("Retrieved Place Details: " + getResponse.asString());
+		logger.debug("Retrieved Place Details: " + responseBody);
 	}
 	  
 	@Test(priority = 3, description = "Test deleting a place via DELETE API")
@@ -123,11 +147,23 @@ public class RahulShettyServiceTest {
 		
 		// Verify the place exists before deletion
 		Response getResponse = service.getPlace(placeId);
+		String getResponseBody = getResponse.asString();
+		logger.info("Get Place Response (before delete): " + getResponseBody);
+		logger.info("Get Place Status Code (before delete): " + getResponse.getStatusCode());
+		
 		getResponse.then()
 			.assertThat()
 			.statusCode(200);
 		
-		JsonPath getJs = new JsonPath(getResponse.asString());
+		// Try to parse JSON - if it fails, log the actual response
+		JsonPath getJs;
+		try {
+			getJs = new JsonPath(getResponseBody);
+		} catch (Exception e) {
+			logger.error("Failed to parse JSON response before delete. Response was: " + getResponseBody);
+			throw new AssertionError("Response is not valid JSON. Response: " + getResponseBody, e);
+		}
+		
 		assertThat("Place should exist before deletion", getJs.get("place_id"), equalTo(placeId));
 		
 		// Delete the place
@@ -164,11 +200,23 @@ public class RahulShettyServiceTest {
 		
 		// Step 2: Get the place
 		Response getResponse = service.getPlace(placeId);
+		String getResponseBody = getResponse.asString();
+		logger.info("Get Place Response (workflow): " + getResponseBody);
+		logger.info("Get Place Status Code (workflow): " + getResponse.getStatusCode());
+		
 		getResponse.then()
 			.assertThat()
 			.statusCode(200);
 		
-		JsonPath getJs = new JsonPath(getResponse.asString());
+		// Try to parse JSON - if it fails, log the actual response
+		JsonPath getJs;
+		try {
+			getJs = new JsonPath(getResponseBody);
+		} catch (Exception e) {
+			logger.error("Failed to parse JSON response in workflow. Response was: " + getResponseBody);
+			throw new AssertionError("Response is not valid JSON. Response: " + getResponseBody, e);
+		}
+		
 		assertThat("Place ID should match", getJs.get("place_id"), equalTo(placeId));
 		logger.info("Step 2: Place retrieved successfully");
 		
