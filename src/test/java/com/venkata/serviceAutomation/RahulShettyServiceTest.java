@@ -15,7 +15,6 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
-import static io.restassured.RestAssured.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
